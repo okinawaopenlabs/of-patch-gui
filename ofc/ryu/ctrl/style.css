@@ -42,6 +42,11 @@ body {
   position:relative;
 }
 
+.selectlocation_area {
+  margin-left: 5px;
+  position:relative;
+}
+
 .of_patch_area {
   width:100%;
   height:100%;

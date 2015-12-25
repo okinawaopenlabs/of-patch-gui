@@ -1,19 +1,3 @@
-/*
- *   Copyright 2015 Okinawa Open Laboratory, General Incorporated Association
- *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
- */
-
 /************************************************************************************/
 // Definition Global variables
 /************************************************************************************/
@@ -77,10 +61,20 @@ function getDeviceListCallback(result){
     result.some(function(l, i){
         var deviceName = l.deviceName;
         var deviceType = l.deviceType;
+        var deviceLocation = l.location;
+        var selectLocation = 0
         ofplog.log(LOG_DEBUG, "getDeviceListCallback() : data : deviceName = " + deviceName + ", deviceType" + deviceType);
 
-        if ((deviceType == "Server") || (deviceType == "Switch")){
-            deviceList.push(deviceName);
+        selectLocation = document.select_location.Select1.selectedIndex;
+
+        if (selectLocation == 0){
+            if (((deviceType == "Server") || (deviceType == "Switch"))) {
+                deviceList.push(deviceName);
+            }
+        } else {
+            if (((deviceType == "Server") || (deviceType == "Switch")) && (deviceLocation == LOCATIONS[selectLocation])){
+                deviceList.push(deviceName);
+            }
         }
     });
 
@@ -321,6 +315,6 @@ function ofPatchGuiMainExec(classes){
     context.cancelButton = d3.select(".cancel");
     context.cancelButton.on("click", function() { cancelClick(context); });
     context.cancelButton.attr("disabled", "disabled");
-
+  
     ofplog.log(LOG_DEBUG, "ofPatchGuiMainExec() - end");
 }
